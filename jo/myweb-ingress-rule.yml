@@ -1,0 +1,38 @@
+#ingress
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: myweb
+  namespace: ingress-myweb
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: www.myweb.com
+    http:
+      paths:
+      - pathType: Prefix
+        path: /regist
+        backend:
+          service:
+            name: regist-svc
+            port:
+              number: 80
+            
+      - pathType: Prefix
+        path: /edit
+        backend:
+          service:
+            name: edit-svc
+            port:
+              number: 80
+
+      - pathType: Prefix
+        path: /login
+        backend:
+          service:
+            name: login-svc
+            port:
+              number: 80
+    
