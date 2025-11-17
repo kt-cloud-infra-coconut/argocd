@@ -1,12 +1,7 @@
-apiVersion: autoscaling/v2
-kind: HorizontalPodAutoscaler
+apiVersion: v1
+kind: ConfigMap
 metadata:
-  name: hpa
-spec:
-  maxReplicas: 10
-  minReplicas: 3
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: my-nginx
-  targetCPUUtilizationPercentage: 40
+  name: hpa-test-config
+  namespace: bae
+data:
+  message: "hello from argocd"
