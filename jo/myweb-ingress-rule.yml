@@ -11,12 +11,20 @@ spec:
   rules:
   - host: www.myweb.com
     http:
+
       paths:
       - pathType: Prefix
         path: /regist
         backend:
           service:
             name: regist-svc
+            port:
+              number: 80
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: login-svc
             port:
               number: 80
             

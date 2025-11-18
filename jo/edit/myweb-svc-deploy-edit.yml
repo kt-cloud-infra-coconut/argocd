@@ -1,26 +1,10 @@
----
-#service edit
-apiVersion: v1
-kind: Service
-metadata:
-  name: edit-svc
-spec:
-  selector:
-    app: edit
-  type: ClusterIP
-  ports:
-  - port: 80
-    targetPort: 80
-
-
----
-#deployment edit
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: edit-deploy
+  namespace: ingress-myweb
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: edit
@@ -30,11 +14,28 @@ spec:
         app: edit
     spec:
       containers:
-        - name: editctn
-          image: eunjun0122/mywebs:edit
-          resources:
-            limits:
-              memory: "32Mi"
-              cpu: "200m"
-          ports:
-          - containerPort: 80  
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+        securityContext:
+          runAsUser: 0
+        volumeMounts:
+        - name: html
+          mountPath: /usr/share/nginx/html
+      volumes:
+      - name: html
+        configMap:
+          name: edit-html
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: edit-svc
+  namespace: ingress-myweb
+spec:
+  selector:
+    app: edit
+  ports:
+  - port: 80
+    targetPort: 80

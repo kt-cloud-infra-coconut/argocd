@@ -1,0 +1,26 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: ingress-myweb
+
+resources:
+  - /root/ingress-test/login/myweb-svc-deploy-login.yml
+  - /root/ingress-test/edit/myweb-svc-deploy-edit.yml
+  - /root/ingress-test/regist/myweb-svc-deploy-regist.yml
+  - /root/ingress-test/myweb-ingress-rule.yml
+
+configMapGenerator:
+  - name: login-html
+    files:
+      - index.html=/root/ingress-test/login/index.html
+
+  - name: edit-html
+    files:
+      - index.html=/root/ingress-test/edit/index.html
+
+  - name: regist-html
+    files:
+      - index.html=/root/ingress-test/regist/index.html
+
+generatorOptions:
+  disableNameSuffixHash: true

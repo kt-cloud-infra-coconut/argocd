@@ -1,61 +1,10 @@
----
-#service login
-apiVersion: v1
-kind: Service
-metadata:
-  name: login-svc
-  namespace: ingress-myweb
-spec:
-  selector:
-    app: login
-  type: ClusterIP
-  ports:
-  - port: 80
-    targetPort: 80
-
-
----
-#deployment login
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: login-deploy
-#   namespace: ingress-myweb
-# spec:
-#   replicas: 2
-#   selector:
-#     matchLabels:
-#       app: login
-#   template:
-#     metadata:
-#       labels:
-#         app: login
-#     spec:
-#       containers:
-#         - name: loginctn
-#           image: eunjun0122/mywebs:login
-#           volumeMounts:
-#             - name: html-volume
-#               mountPath: /usr/share/nginx/html
-#           resources:
-#             limits:
-#               memory: "32Mi"
-#               cpu: "200m"
-#           ports:
-#           - containerPort: 80  
-#       volumes:
-#         - name: html-volume
-#           hostPath:
-#             path: /root/ingress-test/login
-#             type: Directory
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: login-deploy
   namespace: ingress-myweb
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: login
@@ -65,15 +14,28 @@ spec:
         app: login
     spec:
       containers:
-        - name: loginctn
-          image: nginx:alpine
-          ports:
-            - containerPort: 80
-          volumeMounts:
-            - name: html-volume
-              mountPath: /usr/share/nginx/html
+      - name: nginx
+        image: nginx:latest
+        securityContext:
+          runAsUser: 0
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: html
+          mountPath: /usr/share/nginx/html
       volumes:
-        - name: html-volume
-          hostPath:
-            path: /root/ingress-test/login
-            type: Directory
+      - name: html
+        configMap:
+          name: login-html
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: login-svc
+  namespace: ingress-myweb
+spec:
+  selector:
+    app: login
+  ports:
+  - port: 80
+    targetPort: 80

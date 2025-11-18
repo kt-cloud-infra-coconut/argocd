@@ -1,26 +1,10 @@
----
-#service edit
-apiVersion: v1
-kind: Service
-metadata:
-  name: regist-svc
-spec:
-  selector:
-    app: regist
-  type: ClusterIP
-  ports:
-  - port: 80
-    targetPort: 80
-
-
----
-#deployment edit
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: regist-deploy
+  namespace: ingress-myweb
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: regist
@@ -30,11 +14,29 @@ spec:
         app: regist
     spec:
       containers:
-        - name: registctn
-          image: eunjun0122/mywebs:regist
-          resources:
-            limits:
-              memory: "32Mi"
-              cpu: "200m"
-          ports:
-          - containerPort: 80  
+      - name: nginx
+        image: nginx:latest  
+        securityContext:
+          runAsUser: 0
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: html
+          mountPath: /usr/share/nginx/html
+      volumes:
+      - name: html
+        configMap:
+          name: regist-html  # ConfigMap 이름
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: regist-svc
+  namespace: ingress-myweb
+spec:
+  selector:
+    app: regist
+  ports:
+  - port: 80
+    targetPort: 80
