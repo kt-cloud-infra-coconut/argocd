@@ -6,40 +6,39 @@ metadata:
   namespace: ingress-myweb
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
-    nginx.ingress.kubernetes.io/whitelist-source-range: "0.0.0.0/0"
+    nginx.ingress.kubernetes.io/whitelist-source-range: '0.0.0.0/0'
 spec:
   ingressClassName: nginx
   rules:
   - http:
       paths:
-      - pathType: Prefix
-        path: /regist
-        backend:
-          service:
-            name: regist-svc
-            port:
-              number: 80
-      - pathType: Prefix
-        path: /
-        backend:
-          service:
-            name: login-svc
-            port:
-              number: 80
-            
-      - pathType: Prefix
-        path: /edit
-        backend:
-          service:
-            name: edit-svc
-            port:
-              number: 80
+        - pathType: Prefix
+          path: /regist
+          backend:
+            service:
+              name: regist-svc
+              port:
+                number: 80
+        - pathType: Prefix
+          path: /
+          backend:
+            service:
+              name: login-svc
+              port:
+                number: 80
 
-      - pathType: Prefix
-        path: /login
-        backend:
-          service:
-            name: login-svc
-            port:
-              number: 80
-    
+        - pathType: Prefix
+          path: /edit
+          backend:
+            service:
+              name: edit-svc
+              port:
+                number: 80
+
+        - pathType: Prefix
+          path: /login
+          backend:
+            service:
+              name: login-svc
+              port:
+                number: 80
