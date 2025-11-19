@@ -25,16 +25,23 @@ patches:
         path: /spec/template/spec/dnsPolicy
         value: ClusterFirstWithHostNet
   
-  # Job 리소스 재성성 설정 (Immutable 오류 해결)
+  # Job 리소스 충돌 해결을 위해 이름 변경 (v1 추가)
   - target:
       kind: Job
-      name: ingress-nginx-admission-.*
+      name: ingress-nginx-admission-create
       namespace: ingress-nginx
     patch: |-
-      - op: add
-        path: /metadata/annotations
-        value:
-          argocd.argoproj.io/sync-options: Replace=true
+      - op: replace
+        path: /metadata/name
+        value: ingress-nginx-admission-create-v1
+  - target:
+      kind: Job
+      name: ingress-nginx-admission-patch
+      namespace: ingress-nginx
+    patch: |-
+      - op: replace
+        path: /metadata/name
+        value: ingress-nginx-admission-patch-v1
 
 configMapGenerator:
   - name: login-html
