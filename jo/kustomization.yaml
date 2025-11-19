@@ -24,6 +24,17 @@ patches:
       - op: replace
         path: /spec/template/spec/dnsPolicy
         value: ClusterFirstWithHostNet
+  
+  # Job 리소스 재성성 설정 (Immutable 오류 해결)
+  - target:
+      kind: Job
+      name: ingress-nginx-admission-.*
+      namespace: ingress-nginx
+    patch: |-
+      - op: add
+        path: /metadata/annotations
+        value:
+          argocd.argoproj.io/sync-options: Replace=true
 
 configMapGenerator:
   - name: login-html
