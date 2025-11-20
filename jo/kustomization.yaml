@@ -8,9 +8,9 @@ resources:
   - regist/myweb-svc-deploy-regist.yml
   - myweb-ingress-rule.yml
   # NodePort 서비스 추가
-  - ingress-myweb-svc.yml
+  # - ingress-myweb-svc.yml  # 파일이 존재하지 않아 주석 처리
   # 공식 Ingress Controller 원본 리소스 (필수)
-  - https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.14.0/deploy/static/provider/cloud/deploy.yaml
+  # - https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.14.0/deploy/static/provider/cloud/deploy.yaml
 
 # Admission Webhook 관련 Job 제외 (ArgoCD sync 문제 해결)
 patches:
