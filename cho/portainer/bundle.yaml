@@ -35,6 +35,10 @@ spec:
         app: portainer
     spec:
       serviceAccountName: portainer-sa-clusteradmin
+      securityContext:
+        runAsUser: 0
+        runAsGroup: 0
+        fsGroup: 0
       containers:
       - name: portainer
         image: portainer/portainer-ce:latest
