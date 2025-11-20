@@ -9,6 +9,8 @@ resources:
   - myweb-ingress-rule.yml
   # NodePort 서비스 추가
   - ingress-myweb-svc.yml
+  # 공식 Ingress Controller 원본 리소스 (필수)
+  - https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.14.0/deploy/static/provider/cloud/deploy.yaml
 
 configMapGenerator:
   - name: login-html
