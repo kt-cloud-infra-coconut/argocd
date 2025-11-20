@@ -1,12 +1,47 @@
+<<<<<<< HEAD
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
   - namespace.yml
+=======
+# apiVersion: kustomize.config.k8s.io/v1beta1
+# kind: Kustomization
+
+# namespace: ingress-myweb
+
+# resources:
+#   - /root/argocd/jo/login/myweb-svc-deploy-login.yml
+#   - /root/argocd/jo/edit/myweb-svc-deploy-edit.yml
+#   - /root/argocd/jo/regist/myweb-svc-deploy-regist.yml
+#   - /root/argocd/jo/myweb-ingress-rule.yml
+
+# configMapGenerator:
+#   - name: login-html
+#     files:
+#       - index.html=/root/argocd/jo/login/index.html
+
+#   - name: edit-html
+#     files:
+#       - index.html=/root/argocd/jo/edit/index.html
+#   - name: regist-html
+#     files:
+#       - index.html=/root/argocd/jo/regist/index.html
+
+# generatorOptions:
+#   disableNameSuffixHash: true
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: ingress-myweb
+
+resources:
+>>>>>>> 879906f (테스트)
   - login/myweb-svc-deploy-login.yml
   - edit/myweb-svc-deploy-edit.yml
   - regist/myweb-svc-deploy-regist.yml
   - myweb-ingress-rule.yml
+<<<<<<< HEAD
   # NodePort 서비스 추가
   # - ingress-myweb-svc.yml  # 파일이 존재하지 않아 주석 처리
   # 공식 Ingress Controller 원본 리소스 (필수)
@@ -22,6 +57,8 @@ patches:
       kind: ValidatingWebhookConfiguration
     patch: |-
       $patch: delete
+=======
+>>>>>>> 879906f (테스트)
 
 configMapGenerator:
   - name: login-html
