@@ -12,6 +12,17 @@ resources:
   # 공식 Ingress Controller 원본 리소스 (필수)
   - https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.14.0/deploy/static/provider/cloud/deploy.yaml
 
+# Admission Webhook 관련 Job 제외 (ArgoCD sync 문제 해결)
+patches:
+  - target:
+      kind: Job
+    patch: |-
+      $patch: delete
+  - target:
+      kind: ValidatingWebhookConfiguration
+    patch: |-
+      $patch: delete
+
 configMapGenerator:
   - name: login-html
     files:
