@@ -4,22 +4,22 @@ kind: Kustomization
 namespace: ingress-myweb
 
 resources:
-  - /root/argocd/jo/login/myweb-svc-deploy-login.yml
-  - /root/argocd/jo/edit/myweb-svc-deploy-edit.yml
-  - /root/argocd/jo/regist/myweb-svc-deploy-regist.yml
-  - /root/argocd/jo/myweb-ingress-rule.yml
+  - login/myweb-svc-deploy-login.yml
+  - edit/myweb-svc-deploy-edit.yml
+  - regist/myweb-svc-deploy-regist.yml
+  - myweb-ingress-rule.yml
 
 configMapGenerator:
   - name: login-html
     files:
-      - index.html=/root/argocd/jo/login/index.html
+      - index.html=login/index.html
 
   - name: edit-html
     files:
-      - index.html=/root/argocd/jo/edit/index.html
+      - index.html=edit/index.html
   - name: regist-html
     files:
-      - index.html=/root/argocd/jo/regist/index.html
+      - index.html=regist/index.html
 
 generatorOptions:
   disableNameSuffixHash: true
