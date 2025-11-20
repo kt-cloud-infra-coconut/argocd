@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kube-ops-view
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://geek-cookbook.github.io/charts/
+    targetRevision: 1.2.2
+    chart: kube-ops-view
+    helm:
+      parameters:
+        - name: service.type
+          value: NodePort
+        - name: service.nodePort
+          value: "32080"
+        - name: rbac.create
+          value: "true"
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: cho
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
