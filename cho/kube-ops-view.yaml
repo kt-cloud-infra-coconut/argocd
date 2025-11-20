@@ -6,17 +6,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://geek-cookbook.github.io/charts/
-    targetRevision: 1.2.2
-    chart: kube-ops-view
-    helm:
-      parameters:
-        - name: service.type
-          value: NodePort
-        - name: service.nodePort
-          value: "32080"
-        - name: rbac.create
-          value: "true"
+    repoURL: https://github.com/kt-cloud-infra-coconut/argocd.git
+    targetRevision: HEAD
+    path: cho/kube-ops-view
   destination:
     server: https://kubernetes.default.svc
     namespace: cho
