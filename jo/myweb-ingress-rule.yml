@@ -11,7 +11,7 @@ spec:
   ingressClassName: myweb-nginx
   rules:
   - http:
-`     paths:
+     paths:
       - pathType: Prefix
         path: /
         backend:
