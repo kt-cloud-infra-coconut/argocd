@@ -47,10 +47,9 @@ spec:
       serviceAccountName: weave-scope
       containers:
       - name: agent
-        image: weaveworks/scope:1.13.2
+        image: weaveworks/scope:latest
         args:
           - "--no-app"
-          - "--probe.docker=true"
         securityContext:
           privileged: true
         volumeMounts:
@@ -86,7 +85,7 @@ spec:
       serviceAccountName: weave-scope
       containers:
       - name: app
-        image: weaveworks/scope:1.13.2
+        image: weaveworks/scope:latest
         args:
           - "--no-probe"
         ports:
