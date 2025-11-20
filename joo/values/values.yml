@@ -1,0 +1,43 @@
+# Prometheus 설정
+prometheus:
+  prometheusSpec:
+    scrapeConfigNamespaceSelector:
+      matchLabels: 
+        test: "123"
+    retention: 14d
+    storageSpec:
+      existingClaim: coconut-pvc
+  service:
+    type: NodePort
+    nodePort: 30011
+
+# Grafana 설정
+grafana:
+  admin:
+    existingSecret: grafana-pw   # secret name
+    existingSecretKey: admin-password   # secret data
+  persistence:
+    enabled: true
+    existingClaim: coconut-pvc
+  service:
+    type: NodePort
+    nodePort: 30012
+
+# alertmanager 설정
+alertmanager: 
+  enabled: true
+  service:  
+    type: NodePort
+    nodePort: 30013
+  alertmanagerSpec: 
+    replicas: 1
+    resources:
+      requests: 
+        cpu: 100m
+        memory: 256Mi
+      limits:
+        cpu: 500m
+        memory: 512Mi
+    storage: 
+      existingClaim: coconut-pvc
+    

@@ -1,0 +1,23 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: app-servicemonitor
+  namespace: joo
+  labels:
+    release: prom-grafana-alertmanager   # application.yml 의 metadata.name
+spec:
+  selector:
+    matchLabels:
+      app:             # svc에 붙은 라벨
+  namespaceSelector:
+    matchNames: # scrap할 svc가 있는 ns
+      - joo
+        cho
+        jo
+        bae
+        argocd
+
+  endpoints:
+    - port: http-metrics             # svc에 ports.name 정의해야함
+      path: /metrics                 # metrics 엔드포인트
+      interval: 30s                  # 스크랩 주기
