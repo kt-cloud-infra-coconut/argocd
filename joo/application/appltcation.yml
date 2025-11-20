@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prom-grafana-alertmanager
+  namespace: argocd # argocd 가 설치된 ns
+spec:
+  project: default
+
+  source:
+    repoURL: 'https://github.com/kt-cloud-infra-coconut/argocd.git'
+    targetRevision: main
+    path: joo/prometheus-stack # chart 폴더 위치
+    helm:
+      valueFiles:
+        - ../values/values.yaml # 기존 values.yml 기준 상대경로
+  destination: 
+    server: 'https://kubernetes.default.svc' # kubectl get svc 하면 보이는 클러스터 내부 api 서버 주소
+    namespace: joo # 설치할 ns
+  
+  syncPolicy:
+    automated:
+      prune: true # git 에서 리소스 삭제하면 자동 삭제
+      selfHeal: true # 클러스터 상태가 git과 달라지면 자동 복구
