@@ -1,0 +1,76 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kubecost-cost-analyzer
+  namespace: cho
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: kubecost-cost-analyzer
+rules:
+- apiGroups: ["*"]
+  resources: ["*"]
+  verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: kubecost-cost-analyzer
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: kubecost-cost-analyzer
+subjects:
+- kind: ServiceAccount
+  name: kubecost-cost-analyzer
+  namespace: cho
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubecost-cost-analyzer
+  namespace: cho
+  labels:
+    app: kubecost-cost-analyzer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kubecost-cost-analyzer
+  template:
+    metadata:
+      labels:
+        app: kubecost-cost-analyzer
+    spec:
+      serviceAccountName: kubecost-cost-analyzer
+      containers:
+      - name: cost-analyzer
+        image: gcr.io/kubecost1/cost-model:prod-1.103.3
+        ports:
+        - containerPort: 9090
+        env:
+        - name: PROMETHEUS_SERVER_ENDPOINT
+          value: "http://prometheus-server.prometheus.svc.cluster.local" # 프로메테우스가 있다면 연결
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kubecost-cost-analyzer
+  namespace: cho
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 9090
+    nodePort: 32083
+  selector:
+    app: kubecost-cost-analyzer
+
