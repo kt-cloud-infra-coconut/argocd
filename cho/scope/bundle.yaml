@@ -50,24 +50,23 @@ spec:
         image: weaveworks/scope:latest
         args:
           - "--no-app"
-          - "--probe.docker=true"
-          - "--probe.cri.endpoint=/run/containerd/containerd.sock"
+          - "--probe.cri.endpoint=/run/cri-dockerd.sock"
         securityContext:
           privileged: true
         volumeMounts:
         - name: docker-socket
           mountPath: /var/run/docker.sock
-        - name: containerd-socket
-          mountPath: /run/containerd.sock
+        - name: cri-socket
+          mountPath: /run/cri-dockerd.sock
         - name: scope-plugins
           mountPath: /var/run/scope/plugins
       volumes:
       - name: docker-socket
         hostPath:
           path: /var/run/docker.sock
-      - name: containerd-socket
+      - name: cri-socket
         hostPath:
-          path: /run/containerd.sock
+          path: /run/cri-dockerd.sock
       - name: scope-plugins
         hostPath:
           path: /var/run/scope/plugins
