@@ -47,8 +47,6 @@ spec:
           protocol: TCP
         - containerPort: 9443
           protocol: TCP
-        args:
-        - --kubernetes
         volumeMounts:
         - name: data
           mountPath: /data
