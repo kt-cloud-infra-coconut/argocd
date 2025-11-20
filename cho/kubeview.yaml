@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: scope
+  name: kubeview
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://github.com/kt-cloud-infra-coconut/argocd.git
     targetRevision: HEAD
-    path: cho/scope
+    path: cho/kubeview
   destination:
     server: https://kubernetes.default.svc
     namespace: cho
