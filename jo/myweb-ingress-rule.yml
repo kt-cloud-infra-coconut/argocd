@@ -7,9 +7,8 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
     nginx.ingress.kubernetes.io/whitelist-source-range: '0.0.0.0/0'
-    argocd.argoproj.io/sync-options: Validate=false,ServerSideApply=true
 spec:
-  ingressClassName: nginx
+  ingressClassName: myweb-nginx
   rules:
   - http:
       paths:
