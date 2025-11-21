@@ -8,7 +8,7 @@ spec:
 
   source:
     repoURL: 'https://github.com/kt-cloud-infra-coconut/argocd.git'
-    targetRevision: main
+    targetRevision: HEAD
     path: joo/prometheus-stack # chart 폴더 위치
     helm:
       valueFiles:
