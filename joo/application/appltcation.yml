@@ -8,11 +8,11 @@ spec:
 
   source:
     repoURL: 'https://github.com/kt-cloud-infra-coconut/argocd.git'
-    targetRevision: HEAD
+    targetRevision: main
     path: joo/prometheus-stack # chart 폴더 위치
     helm:
       valueFiles:
-        - ../values/values.yaml # 기존 values.yml 기준 상대경로
+        - /values/my-values.yaml
   destination: 
     server: 'https://kubernetes.default.svc' # kubectl get svc 하면 보이는 클러스터 내부 api 서버 주소
     namespace: joo # 설치할 ns
