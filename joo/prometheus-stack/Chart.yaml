@@ -51,9 +51,6 @@ annotations:
     - name: Upgrade Process
       url: https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/README.md#upgrading-chart
 dependencies:
-  - name: crds
-    version: "0.0.0"
-    condition: crds.enabled
   - name: kube-state-metrics
     version: "6.4.1"
     repository: https://prometheus-community.github.io/helm-charts
