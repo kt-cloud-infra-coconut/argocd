@@ -11,15 +11,17 @@ spec:
   ingressClassName: myweb-nginx
   rules:
   - http:
-`     paths:
+     paths:
+
+     # 모든 경로를 php-service로 통합합니다.
       - pathType: Prefix
         path: /
         backend:
           service:
-            name: login-svc
+            name: php-service 
             port:
               number: 80
-          
+
       - pathType: Prefix
         path: /regist
         backend:

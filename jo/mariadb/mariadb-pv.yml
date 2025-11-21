@@ -1,0 +1,15 @@
+# manual-mariadb-pv.yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mariadb-pv-manual
+  labels:
+    type: local
+spec:
+  storageClassName: standard # PVC와 일치해야 함
+  capacity:
+    storage: 5Gi # PVC와 일치해야 함
+  accessModes:
+    - ReadWriteOnce # PVC와 일치해야 함
+  hostPath:
+    path: "/mnt/data/mariadb" # 마스터 노드의 실제 경로 (워커 노드에만 마운트되는 클러스터에서는 주의!)
