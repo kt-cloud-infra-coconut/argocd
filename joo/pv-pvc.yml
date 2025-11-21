@@ -11,6 +11,16 @@ spec:
   gcePersistentDisk:
     pdName: coconut-disk  # disk 이름
     fsType: ext4
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: standard
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: topology.gke.io/zone
+          operator: In
+          values:
+          - asia-northeast3-a 
 
 ---
 # pvc 설정
