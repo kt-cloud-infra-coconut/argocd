@@ -13,6 +13,9 @@ spec:
     helm:
       valueFiles:
         - my-values.yml
+      parameters: 
+        - name: crds.enabled
+          value: "false"
   destination: 
     server: 'https://kubernetes.default.svc' # kubectl get svc 하면 보이는 클러스터 내부 api 서버 주소
     namespace: joo # 설치할 ns
