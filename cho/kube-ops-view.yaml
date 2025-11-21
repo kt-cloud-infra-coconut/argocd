@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kube-ops-view
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/kt-cloud-infra-coconut/argocd.git
+    targetRevision: HEAD
+    path: cho/kube-ops-view
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: cho
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
