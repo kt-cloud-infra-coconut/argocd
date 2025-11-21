@@ -9,7 +9,7 @@ prometheus:
       existingClaim: coconut-pvc
   service:
     type: NodePort
-    nodePort: 30111
+    nodePort: 31100
 
 # Grafana 설정
 grafana:
@@ -21,14 +21,14 @@ grafana:
     existingClaim: coconut-pvc
   service:
     type: NodePort
-    nodePort: 30222
+    nodePort: 32200
 
 # alertmanager 설정
 alertmanager: 
   enabled: true
   service:  
     type: NodePort
-    nodePort: 30333
+    nodePort: 33300
   alertmanagerSpec: 
     replicas: 1
     resources:
