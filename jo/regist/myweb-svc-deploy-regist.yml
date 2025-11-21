@@ -20,6 +20,13 @@ spec:
           runAsUser: 0
         ports:
         - containerPort: 80
+        resources:
+          limits:       # 물리자원에 여유가 있어서 사용할 수 있는 최대 값
+            memory: "64Mi"
+            cpu: "500m"
+          requests:      # 최소 보장
+            memory: "32Mi"
+            cpu: "250m"  
         volumeMounts:
         - name: html
           mountPath: /usr/share/nginx/html
