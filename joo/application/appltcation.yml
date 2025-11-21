@@ -24,3 +24,5 @@ spec:
     automated:
       prune: true # git 에서 리소스 삭제하면 자동 삭제
       selfHeal: true # 클러스터 상태가 git과 달라지면 자동 복구
+    syncOptions: 
+      - SkipCRDs=true   # crd 파일 다운로드 안함
