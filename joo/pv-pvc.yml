@@ -35,4 +35,5 @@ spec:
   resources:
     requests:
       storage: 15Gi
+  storageClassName: standard
   volumeName: coconut-pv   # pv 이름
