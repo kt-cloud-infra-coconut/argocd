@@ -6,7 +6,7 @@ prometheus:
         test: "123"
     retention: 14d
     storageSpec:
-      existingClaim: coconut-pvc
+      existingClaim: master-pvc
   service:
     type: NodePort
     nodePort: 30030
@@ -17,8 +17,7 @@ grafana:
     existingSecret: grafana-pw   # secret name
     existingSecretKey: admin-password   # secret data
   persistence:
-    enabled: true
-    existingClaim: coconut-pvc
+    enabled: false
   service:
     type: NodePort
     nodePort: 30031
@@ -38,6 +37,3 @@ alertmanager:
       limits:
         cpu: 500m
         memory: 512Mi
-    storage: 
-      existingClaim: coconut-pvc
-    
