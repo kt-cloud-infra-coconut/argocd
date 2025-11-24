@@ -32,7 +32,8 @@ metadata:
   # StatefulSet 이름: prometheus-prom-grafana-alertmanager-prometheus
   # 생성되는 PVC 이름 형식: <volumeClaimTemplate.name>-<statefulset.name>-<ordinal>
   # 아래 이름은 ordinal 0에 해당하는 PVC 명입니다.
-  name: prometheus-prom-grafana-alertmanager-prometheus-db-prom-grafana-alertmanager-prometheus-0
+  # 실제 StatefulSet이 생성한 PVC 이름(ordinal 0)에 맞춤
+  name: prometheus-prom-grafana-alertmanager-prometheus-db-prometheus-prom-grafana-alertmanager-prometheus-0
   namespace: joo   # kube-prometheus-stack이 설치되는 네임스페이스
 spec:
   accessModes:
