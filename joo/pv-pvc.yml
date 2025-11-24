@@ -17,10 +17,10 @@ spec:
     required:
       nodeSelectorTerms:
       - matchExpressions:
-        - key: topology.gke.io/zone
+        - key: topology.kubernetes.io/zone
           operator: In
           values:
-          - asia-northeast3-a 
+          - asia-northeast3-a
 
 ---
 # pvc 설정
