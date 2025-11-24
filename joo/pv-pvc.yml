@@ -17,7 +17,7 @@ spec:
     required:
       nodeSelectorTerms:
       - matchExpressions:
-        - key: topology.kubernetes.io/zone
+        - key: topology.gke.io/zone
           operator: In
           values:
           - asia-northeast3-a
