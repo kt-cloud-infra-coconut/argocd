@@ -3,7 +3,7 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: etcd-backup
-  namespace: bso
+  namespace: bae
 spec:
   schedule: "0 0 * * *" # 매일 자정에 실행
   concurrencyPolicy: Forbid
