@@ -38,10 +38,9 @@ alertmanager:
         cpu: 500m
         memory: 512Mi
   config:
-  global:
-    resolve_timeout: 5m
-  route:
-    enabled: true
-    receiver: 'default'
-  receivers:
-    - name: 'default'
+    global:
+      resolve_timeout: 5m
+    route:
+      receiver: 'default'
+    receivers:
+      - name: 'default'
