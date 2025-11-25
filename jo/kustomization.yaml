@@ -4,7 +4,6 @@ kind: Kustomization
 namespace: ingress-myweb
 
 resources:
-<<<<<<< HEAD
   - edit/myweb-svc-deploy-edit.yml
   - login/myweb-svc-deploy-login.yml
   - regist/myweb-svc-deploy-regist.yml
@@ -15,11 +14,6 @@ resources:
   - mariadb/mariadb-pvc.yml
   # - metallb-iprange.yml
   - ingress-myweb-svc.yml
-=======
-  - login/myweb-svc-deploy-login.yml
-  - edit/myweb-svc-deploy-edit.yml
-  - regist/myweb-svc-deploy-regist.yml
->>>>>>> refs/remotes/origin/main
   - myweb-ingress-rule.yml
 
 configMapGenerator:

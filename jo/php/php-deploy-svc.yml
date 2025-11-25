@@ -28,7 +28,7 @@ spec:
       # 1. PHP-FPM 컨테이너 (PHP 코드 실행기)
       # ----------------------------------------------------
       - name: php-fpm
-        image: php:8.1-fpm-alpine
+        image: myapp:1.0.1
         ports:
         - containerPort: 9000
         volumeMounts:
