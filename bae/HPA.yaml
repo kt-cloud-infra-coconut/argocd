@@ -1,5 +1,5 @@
 ---
-# 웹 인덱스 HPA 설정
+# 에디트 서비스 HPA 설정
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
@@ -9,7 +9,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: edit-deploy
+    name: php-edit-deploy
   minReplicas: 2
   maxReplicas: 10
   metrics:
@@ -38,7 +38,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: login-deploy
+    name: php-login-deploy
   minReplicas: 2
   maxReplicas: 10
   metrics:
@@ -67,7 +67,36 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: regist-deploy
+    name: php-regist-deploy
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 50 # 평균 사용률 50%로 유지
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 50
+        
+
+---
+# 앱 서비스 HPA 설정
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: app-deploy-hpa
+  namespace: ingress-myweb
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: php-app-deploy
   minReplicas: 2
   maxReplicas: 10
   metrics:
