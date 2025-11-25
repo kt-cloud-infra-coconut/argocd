@@ -8,11 +8,9 @@ resources:
   - login/myweb-svc-deploy-login.yml
   - regist/myweb-svc-deploy-regist.yml
   - php/php-deploy-svc.yml
-  # - php/nginx-config.yml
   - mariadb/mariadb-deploy.yml
   - mariadb/mariadb-pv.yml
   - mariadb/mariadb-pvc.yml
-  # - metallb-iprange.yml
   - ingress-myweb-svc.yml
   - myweb-ingress-rule.yml
 
@@ -28,16 +26,17 @@ configMapGenerator:
       - index.php=php/index.php
 
       
-  - name: login-html
+  - name: login-php
     files:
-      - index.html=login/index.html
+      - index.php=login/index.php
 
-  - name: edit-html
+  - name: edit-php
     files:
-      - index.html=edit/index.html
-  - name: regist-html
+      - index.php=edit/index.php
+
+  - name: regist-php
     files:
-      - index.html=regist/index.html
+      - index.php=regist/index.php
 
 generatorOptions:
   disableNameSuffixHash: true

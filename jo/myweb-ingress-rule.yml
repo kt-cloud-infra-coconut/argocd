@@ -15,27 +15,30 @@ spec:
         path: /
         backend:
           service:
-            name: php-service
+            name: php-login-service
             port:
               number: 80
+
       - pathType: Prefix
         path: /regist
         backend:
           service:
-            name: regist-svc
+            name: php-regist-service
             port:
               number: 80
+
       - pathType: Prefix
         path: /edit
         backend:
           service:
-            name: edit-svc
+            name: php-edit-service
             port:
               number: 80
+
       - pathType: Prefix
-        path: /login
+        path: /dbconnect
         backend:
           service:
-            name: login-svc
+            name: php-service
             port:
               number: 80

@@ -1,48 +1,59 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: login-deploy
+  name: php-login-deploy
   namespace: ingress-myweb
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: login
+      app: php-login
   template:
     metadata:
       labels:
-        app: login
+        app: php-login
     spec:
-      containers:
-      - name: nginx
-        image: nginx:latest
-        securityContext:
-          runAsUser: 0
-        ports:
-        - containerPort: 80
-        resources:
-          limits:       # 물리자원에 여유가 있어서 사용할 수 있는 최대 값
-            memory: "64Mi"
-            cpu: "500m"
-          requests:      # 최소 보장
-            memory: "32Mi"   
-            cpu: "250m"  
-        volumeMounts:
-        - name: html
-          mountPath: /usr/share/nginx/html
       volumes:
-      - name: html
-        configMap:
-          name: login-html
+        # PHP 코드 ConfigMap
+        - name: php-code
+          configMap:
+            name: login-php
+        # Nginx 설정 ConfigMap
+        - name: nginx-config
+          configMap:
+            name: nginx-config
+      containers:
+        # 1. PHP-FPM 컨테이너
+        - name: php-fpm
+          image: eunjun0122/myapp:1.0.4
+          ports:
+            - containerPort: 9000
+          volumeMounts:
+            - name: php-code
+              mountPath: /var/www/html
+        # 2. Nginx 컨테이너
+        - name: nginx
+          image: nginx:stable-alpine
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: php-code
+              mountPath: /var/www/html
+            - name: nginx-config
+              mountPath: /etc/nginx/conf.d/default.conf
+              subPath: default.conf
+
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: login-svc
+  name: php-login-service
   namespace: ingress-myweb
 spec:
   selector:
-    app: login
+    app: php-login
   ports:
-  - port: 80
-    targetPort: 80
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP
