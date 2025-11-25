@@ -5,22 +5,8 @@ prometheus:
       matchLabels: 
         test: "123"
     retention: 14d
-    tolerations:
-      - key: "node-role.kubernetes.io/control-plane"
-        operator: "Exists"
-        effect: "NoSchedule"
-    # storageSpec: 기존 existingClaim 대신 volumeClaimTemplate 형식으로 명시
-    # Prometheus Operator가 생성하는 StatefulSet의 volumeClaimTemplates를 통해
-    # PVC를 만들도록 용량을 지정합니다.
-    storageSpec:
-      volumeClaimTemplate:
-        spec:
-          accessModes:
-            - ReadWriteOnce
-          resources:
-            requests:
-              storage: 40Gi
-          storageClassName: ""
+    storageSpec: 
+      emptyDir: {}
   service:
     type: NodePort
     nodePort: 30030
@@ -51,3 +37,10 @@ alertmanager:
       limits:
         cpu: 500m
         memory: 512Mi
+  config:
+  global:
+    resolve_timeout: 5m
+  route:
+    receiver: 'default'
+  receivers:
+    - name: 'default'
