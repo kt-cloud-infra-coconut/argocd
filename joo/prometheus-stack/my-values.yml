@@ -7,9 +7,14 @@ prometheus:
     retention: 14d
     storageSpec: 
       emptyDir: {}
+    podMetadata:
+      labels: 
+        coconut: enable
   service:
     type: NodePort
     nodePort: 30030
+    labels:
+      coconut: enable
 
 # Grafana 설정
 grafana:
@@ -21,6 +26,10 @@ grafana:
   service:
     type: NodePort
     nodePort: 30031
+    labels: 
+      coconut: enable
+  podLabels:
+    coconut: enable
 
 # alertmanager 설정
 alertmanager: 
@@ -28,6 +37,8 @@ alertmanager:
   service:  
     type: NodePort
     nodePort: 30032
+    labels: 
+      coconut: enable
   alertmanagerSpec: 
     replicas: 1
     resources:
@@ -37,10 +48,13 @@ alertmanager:
       limits:
         cpu: 500m
         memory: 512Mi
+    podMetadata: 
+      labels: 
+        coconut: enable
   config:
-  global:
-    resolve_timeout: 5m
-  route:
-    receiver: 'default'
-  receivers:
-    - name: 'default'
+    global:
+      resolve_timeout: 5m
+    route:
+      receiver: 'default'
+    receivers:
+      - name: 'default'
