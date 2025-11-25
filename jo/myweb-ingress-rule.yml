@@ -12,11 +12,6 @@ spec:
   rules:
   - http:
      paths:
-<<<<<<< HEAD
-
-     # 모든 경로를 php-service로 통합합니다.
-=======
->>>>>>> refs/remotes/origin/main
       - pathType: Prefix
         path: /
         backend:
