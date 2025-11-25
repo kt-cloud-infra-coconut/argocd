@@ -6,10 +6,10 @@ metadata:
   labels:
     type: local
 spec:
-  storageClassName: standard # PVC와 일치해야 함
+  storageClassName: standard
   capacity:
-    storage: 5Gi # PVC와 일치해야 함
+    storage: 5Gi
   accessModes:
-    - ReadWriteOnce # PVC와 일치해야 함
+    - ReadWriteOnce
   hostPath:
-    path: "/mnt/data/mariadb" # 마스터 노드의 실제 경로 (워커 노드에만 마운트되는 클러스터에서는 주의!)
+    path: "/mnt/data/mariadb"

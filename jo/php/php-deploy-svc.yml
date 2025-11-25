@@ -1,3 +1,6 @@
+# ----------------------------------------
+# php-app-deployment.yaml
+# ----------------------------------------
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -17,45 +20,34 @@ spec:
         # 1. PHP 코드 ConfigMap 볼륨 (index.php)
         - name: app-code-volume
           configMap:
-            name: php-index-file # 👈 kustomization.yaml에서 정의된 이름
+            name: php-index-file
         # 2. Nginx 설정 ConfigMap 볼륨 (default.conf)
         - name: nginx-config-volume
           configMap:
-            name: nginx-config   # 👈 kustomization.yaml에서 정의된 이름
-            
+            name: nginx-config
       containers:
-      # ----------------------------------------------------
-      # 1. PHP-FPM 컨테이너 (PHP 코드 실행기)
-      # ----------------------------------------------------
       - name: php-fpm
-        image: myapp:1.0.1
+        image: eunjun0122/myapp:1.0.3
         ports:
         - containerPort: 9000
         volumeMounts:
-        # PHP 코드를 웹 루트에 마운트
         - name: app-code-volume
-          mountPath: /var/www/html 
-        # ConfigMap으로 마운트된 파일의 권한 문제 해결을 위해 fsGroup을 설정하는 것이 좋습니다.
-        # 그러나 현재는 간단한 설정을 위해 생략합니다.
-
-      # ----------------------------------------------------
-      # 2. Nginx 컨테이너 (웹 서버 & 리버스 프록시)
-      # ----------------------------------------------------
+          mountPath: /var/www/html
       - name: nginx
         image: nginx:stable-alpine
         ports:
         - containerPort: 80
         volumeMounts:
-        # PHP 코드를 Nginx 웹 루트에 마운트 (PHP-FPM과 동일 경로)
         - name: app-code-volume
-          mountPath: /var/www/html 
-        # Nginx 설정 파일을 기본 설정 파일 경로에 덮어씌웁니다.
+          mountPath: /var/www/html
         - name: nginx-config-volume
-          mountPath: /etc/nginx/conf.d/default.conf 
-          subPath: default.conf # ConfigMap의 항목 이름과 일치해야 합니다.
+          mountPath: /etc/nginx/conf.d/default.conf
+          subPath: default.conf
 
 ---
-# php/php-service.yaml (Service 정의)
+# ----------------------------------------
+# php-service.yaml
+# ----------------------------------------
 apiVersion: v1
 kind: Service
 metadata:
