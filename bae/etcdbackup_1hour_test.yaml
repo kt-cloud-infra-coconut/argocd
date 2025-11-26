@@ -2,24 +2,27 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: etcd-backup
+  name: etcd-backup-hourly
   namespace: bae
 spec:
-  schedule: "0 0 * * *" # 매일 자정에 실행
+  # 매 정시마다 실행 (1시간 간격, 서버 타임존은 UTC)
+  # => 한국 시간 기준으로는 매 정시 9분 차이 없이 도는 느낌 (UTC+9)
+  schedule: "0 * * * *"
   concurrencyPolicy: Forbid
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 3
 
   jobTemplate:
     spec:
-      backoffLimit: 1
-      ttlSecondsAfterFinished: 86400 # 작업 완료 후 1일 후에 정리
+      backoffLimit: 1                 # 실패 시 1번만 재시도 (디버깅용)
+      ttlSecondsAfterFinished: 3600   # 완료 후 1시간 동안 Job/Pod 유지
+
       template:
         spec:
           hostNetwork: true
           restartPolicy: OnFailure
 
-          # 컨트롤 플레인 노드에서만 실행되게 (kubeadm 기본 라벨 가정)
+          # 컨트롤 플레인 노드에서만 실행
           nodeSelector:
             node-role.kubernetes.io/control-plane: ""
           tolerations:
