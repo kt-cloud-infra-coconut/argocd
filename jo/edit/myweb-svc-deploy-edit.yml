@@ -17,7 +17,7 @@ spec:
         # PHP 코드 ConfigMap
         - name: php-code
           configMap:
-            name: login-php
+            name: edit-php
         # Nginx 설정 ConfigMap
         - name: nginx-config
           configMap:
@@ -25,7 +25,7 @@ spec:
       containers:
         # 1. PHP-FPM 컨테이너
         - name: php-fpm
-          image: eunjun0122/myapp:1.0.4
+          image: eunjun0122/myapp:1.1.0
           ports:
             - containerPort: 9000
           resources:

@@ -6,8 +6,9 @@
   <title>edit</title>
 </head>
 <body>
+  <form action = "" method="post">
    <h1 style="text-align: center;">myweb edit page</h1>
-   <table>
+   <table align="center" border="1">
     <tr>
       <td>이름 <input type="text" name="name"></td>
     </tr>
@@ -21,5 +22,6 @@
       <td><input type="submit" value="수정하기"></td>
     </tr>
    </table>
+  </form>
 </body>
 </html>
