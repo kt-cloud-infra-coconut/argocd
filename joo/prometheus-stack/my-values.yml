@@ -51,9 +51,12 @@ alertmanager:
     podMetadata:
       labels:
         coconut: enable
-    extraEnvFrom: 
-      - secretRef:
-          name: alertmanager-slack
+    extraEnv:
+      - name: SLACK_API_URL
+        valueFrom: 
+          secretKeyRef:
+            name: alertmanager-slack
+            key: SLACK_API_URL
   config:
     global:
       slack_api_url: "$(SLACK_API_URL)" # 환경변수로 참조
