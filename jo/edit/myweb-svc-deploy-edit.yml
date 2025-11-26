@@ -28,6 +28,13 @@ spec:
           image: eunjun0122/myapp:1.0.4
           ports:
             - containerPort: 9000
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"            
           volumeMounts:
             - name: php-code
               mountPath: /var/www/html

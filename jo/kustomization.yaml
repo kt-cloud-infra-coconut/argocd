@@ -24,7 +24,6 @@ configMapGenerator:
   - name: php-index-file
     files:
       - index.php=php/index.php
-
       
   - name: login-php
     files:
