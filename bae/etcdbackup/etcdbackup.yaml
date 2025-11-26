@@ -4,7 +4,7 @@ metadata:
   name: etcd-backup
   namespace: bae
 spec:
-  schedule: "0 0 * * *" # 매일 00시 마다 실행
+  schedule: "*/10 * * * *" # 매 10분 마다 실행
   concurrencyPolicy: Forbid
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 3
@@ -74,6 +74,5 @@ spec:
               path: /etc/kubernetes/pki/etcd
               type: DirectoryOrCreate
           - name: etcd-backup-dir
-            hostPath:
-              path: /var/lib/etcd/etcd_backup
-              type: DirectoryOrCreate
+            persistentVolumeClaim:
+              claimName: etcd-pvc
