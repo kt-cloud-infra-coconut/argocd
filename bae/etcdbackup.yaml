@@ -5,7 +5,7 @@ metadata:
   name: etcd-backup
   namespace: bae
 spec:
-  schedule: "0 0 * * *" # 매일 자정에 실행
+  schedule: "0 0 * * *" # 매일 00:00 UTC (한국 09:00)
   concurrencyPolicy: Forbid
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 3
@@ -13,13 +13,12 @@ spec:
   jobTemplate:
     spec:
       backoffLimit: 1
-      ttlSecondsAfterFinished: 86400 # 작업 완료 후 1일 후에 정리
+      ttlSecondsAfterFinished: 86400
       template:
         spec:
           hostNetwork: true
           restartPolicy: OnFailure
 
-          # 컨트롤 플레인 노드에서만 실행되게 (kubeadm 기본 라벨 가정)
           nodeSelector:
             node-role.kubernetes.io/control-plane: ""
           tolerations:
@@ -29,7 +28,7 @@ spec:
 
           containers:
           - name: etcd-backup
-            image: registry.k8s.io/etcd:3.5.13-0   # 클러스터 etcd 버전에 맞게 필요시 수정
+            image: registry.k8s.io/etcd:3.5.13-0
             imagePullPolicy: IfNotPresent
             env:
             - name: ETCDCTL_API
@@ -39,17 +38,13 @@ spec:
             - /bin/sh
             - -c
             - |
-              set -euo pipefail
+              set -e
 
-              etcd_dir=/var/lib/etcd/etcd_backup
-              mkdir -p "${etcd_dir}"
+              SNAPSHOT_FILE="/var/lib/etcd/etcd_backup/etcd-snapshot-$(hostname).db"
 
-              TS=$(date +%Y%m%d%H%M%S)
-              SNAPSHOT_FILE="${etcd_dir}/etcd-snapshot-${TS}.db"
+              echo "[$(hostname)] ${SNAPSHOT_FILE} 스냅샷 생성 시작"
 
-              echo "[$(date)] ${SNAPSHOT_FILE} 스냅샷 생성 시작"
-
-              etcdctl \
+              /usr/local/bin/etcdctl \
                 --endpoints=https://127.0.0.1:2379 \
                 --cacert=/etc/kubernetes/pki/etcd/ca.crt \
                 --cert=/etc/kubernetes/pki/etcd/server.crt \
@@ -58,7 +53,7 @@ spec:
 
               echo "==> 스냅샷 저장 완료, 상태 확인 중..."
 
-              etcdctl \
+              /usr/local/bin/etcdctl \
                 --write-out=table \
                 snapshot status "${SNAPSHOT_FILE}"
 
