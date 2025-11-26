@@ -26,21 +26,13 @@ spec:
     - /bin/sh
     - -c
     - |
-      set -euo pipefail
-      set -x  # 디버깅용: 실행되는 명령도 같이 출력
+      set -e
 
-      echo "==> etcd cert 디렉토리 목록"
-      ls -l /etc/kubernetes/pki/etcd || echo "etcd cert dir not found"
+      SNAPSHOT_FILE="/var/lib/etcd/etcd_backup/etcd-snapshot-debug.db"
 
-      etcd_dir=/var/lib/etcd/etcd_backup
-      mkdir -p "${etcd_dir}"
+      echo "[$(date)] ${SNAPSHOT_FILE} 스냅샷 생성 시작 (date 없어도 그냥 통과될 수 있음)"
 
-      TS=$(date +%Y%m%d%H%M%S)
-      SNAPSHOT_FILE="${etcd_dir}/etcd-snapshot-${TS}-debug.db"
-
-      echo "[$(date)] ${SNAPSHOT_FILE} 스냅샷 생성 시작"
-
-      etcdctl \
+      /usr/local/bin/etcdctl \
         --endpoints=https://127.0.0.1:2379 \
         --cacert=/etc/kubernetes/pki/etcd/ca.crt \
         --cert=/etc/kubernetes/pki/etcd/server.crt \
@@ -49,7 +41,7 @@ spec:
 
       echo "==> 스냅샷 저장 완료, 상태 확인 중..."
 
-      etcdctl \
+      /usr/local/bin/etcdctl \
         --write-out=table \
         snapshot status "${SNAPSHOT_FILE}"
 
