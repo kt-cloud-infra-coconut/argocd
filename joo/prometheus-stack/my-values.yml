@@ -31,28 +31,28 @@ grafana:
   podLabels:
     coconut: enable
 
-# alertmanager 설정
-alertmanager: 
+# Alertmanager 설정
+alertmanager:
   enabled: true
-  service:  
+  service:
     type: NodePort
     nodePort: 30032
-    labels: 
+    labels:
       coconut: enable
-  alertmanagerSpec: 
+  alertmanagerSpec:
     replicas: 1
     resources:
-      requests: 
+      requests:
         cpu: 100m
         memory: 256Mi
       limits:
         cpu: 500m
         memory: 512Mi
-    podMetadata: 
-      labels: 
+    podMetadata:
+      labels:
         coconut: enable
     secrets:
-      - alertmanager-slack   # secret name
+      - alertmanager-slack   # Secret 이름
   config:
     global:
       slack_api_url_file: /etc/alertmanager/secrets/slack_api_url
@@ -60,14 +60,14 @@ alertmanager:
       receiver: 'slack-notifications'
       group_by: ['alertname']
       group_wait: 30s
-      group_interval: 5m 
-      repeat_interval: 1h 
+      group_interval: 5m
+      repeat_interval: 1h
     receivers:
       - name: 'slack-notifications'
-        slack_configs: 
-          - channel: 'coconut-alert-test'
-            username: 'Alertmanager' 
+        slack_configs:
+          - channel: '#coconut-alert-test'   # Slack 채널명은 # 붙여야 함
+            username: 'Alertmanager'
             icon_emoji: ':warning:'
-            send_resolved: true 
+            send_resolved: true
             title: '{{ .CommonAnnotations.summary }}'
             text: '{{ .CommonAnnotations.description }}'
