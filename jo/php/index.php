@@ -3,7 +3,7 @@
 // MariaDB 접속 설정
 $db_host = 'mariadb-service'; // 같은 네임스페이스의 서비스 이름
 $db_port = '3306';
-$db_user = 'root';
+$db_user = 'root'; // ⚠️ 위 MariaDB 파일과 일치해야 함
 $db_pass = 'as1230'; // ⚠️ 위 MariaDB 파일과 일치해야 함
 $db_name = 'mywebdb'; // ⚠️ 위 MariaDB 파일과 일치해야 함
 
