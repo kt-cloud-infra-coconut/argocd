@@ -4,7 +4,7 @@ metadata:
   name: etcd-backup
   namespace: bae
 spec:
-  schedule: "*/10 * * * *" # 매 시 정각 마다 실행, 15시가 자정
+  schedule: "0 15 * * *" # 매일 한국시간 자정 마다 실행
   concurrencyPolicy: Forbid
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 3
