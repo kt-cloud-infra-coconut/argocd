@@ -4,7 +4,7 @@ metadata:
   name: etcd-backup
   namespace: bae
 spec:
-  schedule: "*/10 * * * *" # 매일 자정 마다 실행 15시로
+  schedule: "0 * * * *" # 매 시 정각 마다 실행, 15시가 자정
   concurrencyPolicy: Forbid
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 3
@@ -60,14 +60,6 @@ spec:
                 snapshot status "${SNAPSHOT_FILE}"
 
               echo "==> etcd 스냅샷 작업 완료"
-
-              echo "==> Google Drive 업로드 시작"
-
-              rclone copy "${SNAPSHOT_FILE}" \
-                google-drive-etcd: \
-                --drive-root-folder-id 1C7873kF5fEqB5PfDNfRHaferzm3Gz8aF
-
-              echo "==> Google Drive 업로드 완료"
 
             volumeMounts:
             - name: etcd-certs
