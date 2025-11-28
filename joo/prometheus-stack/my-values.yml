@@ -39,6 +39,8 @@ alertmanager:
     nodePort: 30032
     labels:
       coconut: enable
+  secret:
+    - alertmanager-slack
   alertmanagerSpec:
     replicas: 1
     resources:
@@ -51,15 +53,9 @@ alertmanager:
     podMetadata:
       labels:
         coconut: enable
-    extraEnv:
-      - name: SLACK_API_URL
-        valueFrom: 
-          secretKeyRef:
-            name: alertmanager-slack
-            key: SLACK_API_URL
   config:
     global:
-      slack_api_url: "$(SLACK_API_URL)" # 환경변수로 참조
+      slack_api_url: "file:/etc/alertmanager/secrets/SLACK_API_URL"
     route:
       receiver: 'slack-notifications'
       group_by: ['alertname']
