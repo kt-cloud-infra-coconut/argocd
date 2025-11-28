@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: test-alert
+  namespace: joo
+spec:
+  groups:
+  - name: test.rules
+    rules:
+    - alert: SlackTestAlert
+      expr: vector(1)  # 항상 true → Alert 발생
+      for: 1m
+      labels:
+        severity: warning
+      annotations:
+        summary: "Slack 테스트 알람"
+        description: "이 알람은 Slack 연동 테스트용입니다."
