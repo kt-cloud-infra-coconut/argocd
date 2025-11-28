@@ -39,7 +39,7 @@ alertmanager:
     nodePort: 30032
     labels:
       coconut: enable
-  secret:
+  secrets:
     - alertmanager-slack
   alertmanagerSpec:
     replicas: 1
