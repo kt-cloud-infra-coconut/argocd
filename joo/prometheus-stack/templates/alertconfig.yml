@@ -20,7 +20,7 @@ spec:
       iconEmoji: ':warning:'
       sendResolved: true
       title: '알림'
-      text: '테스트 알림 {{ "{{ .CommonAnnotations.description }}" }}'
+      text: '테스트 알림 {{ .CommonAnnotations.description }}'
       apiURL:
         name: alertmanager-slack
         key: slack_api_url
