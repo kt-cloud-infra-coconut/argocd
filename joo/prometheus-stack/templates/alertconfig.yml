@@ -19,8 +19,8 @@ spec:
       username: 'Alertmanager'
       iconEmoji: ':warning:'
       sendResolved: true
-      title: '{{ .CommonAnnotations.summary }}'
-      text: '{{ .CommonAnnotations.description }}'
+      title: '{{ "{{ .CommonAnnotations.summary }}" }}'
+      text: '{{ "{{ .CommonAnnotations.description }}" }}'
       apiURL:
         secret:
           name: alertmanager-slack
