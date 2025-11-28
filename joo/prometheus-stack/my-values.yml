@@ -51,21 +51,6 @@ alertmanager:
     podMetadata:
       labels:
         coconut: enable
-    config:
-      global:
-        slack_api_url: "https://hooks.slack.com/services/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" 
-      route:
-        receiver: 'slack-notifications'
-        group_by: ['alertname']
-        group_wait: 30s
-        group_interval: 5m
-        repeat_interval: 1h
-      receivers:
-        - name: 'slack-notifications'
-          slack_configs:
-            - channel: '#coconut-alert-test'
-              username: 'Alertmanager'
-              icon_emoji: ':warning:'
-              send_resolved: true
-              title: '{{ .CommonAnnotations.summary }}'
-              text: '{{ .CommonAnnotations.description }}'
+    alertmanagerConfigSelector:
+      matchLabels:
+        alertmanagerConfig: slack
