@@ -41,5 +41,9 @@ configMapGenerator:
       - index.php=php/regist/index.php
       - regist_ok.php=php/regist/regist_ok.php
 
+  - name: nginx-login-conf
+    files:
+      - nginx-login.conf=php/login/nginx-login.conf
+
 generatorOptions:
   disableNameSuffixHash: true
