@@ -19,7 +19,7 @@ spec:
       username: 'Alertmanager'
       iconEmoji: ':warning:'
       sendResolved: true
-      title: '테스트'
+      title: '알림'
       text: 테스트 알림 {{ "{{ .CommonAnnotations.description }}" }}'
       apiURL:
         name: alertmanager-slack

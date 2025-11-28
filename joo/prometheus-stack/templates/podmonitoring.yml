@@ -1,0 +1,23 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: app-podmonitor
+  namespace: joo
+  labels:
+    release: prom-grafana-alertmanager   # application.yml 의 metadata.name
+spec:
+  selector:
+    matchLabels:
+      coconut: enable   # Pod에 붙은 라벨
+  namespaceSelector:    # scrap할 pod가 있는 ns
+    matchNames:
+      - joo
+      - argocd
+
+  podMetricsEndpoints:
+    - port: http-web    # 프로메테우스 pod.port
+      path: /metrics
+      interval: 30s
+    - port: grafana 
+      path: /metrics    # 그라파나 pod.port
+      interval: 30s
