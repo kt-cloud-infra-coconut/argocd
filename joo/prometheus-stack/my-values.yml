@@ -39,8 +39,6 @@ alertmanager:
     nodePort: 30032
     labels:
       coconut: enable
-  secrets:
-    - alertmanager-slack
   alertmanagerSpec:
     replicas: 1
     resources:
@@ -55,7 +53,7 @@ alertmanager:
         coconut: enable
   config:
     global:
-      slack_api_url: "file:/etc/alertmanager/secrets/SLACK_API_URL"
+      slack_api_url: "https://hooks.slack.com/services/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" 
     route:
       receiver: 'slack-notifications'
       group_by: ['alertname']
@@ -65,7 +63,7 @@ alertmanager:
     receivers:
       - name: 'slack-notifications'
         slack_configs:
-          - channel: '#coconut-alert-test'   # Slack 채널명은 # 붙여야 함
+          - channel: '#coconut-alert-test'
             username: 'Alertmanager'
             icon_emoji: ':warning:'
             send_resolved: true
