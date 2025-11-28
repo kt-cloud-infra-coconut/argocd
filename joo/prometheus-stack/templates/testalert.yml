@@ -3,6 +3,8 @@ kind: PrometheusRule
 metadata:
   name: test-alert
   namespace: joo
+  labels: 
+    release: prom-grafana-alertmanager
 spec:
   groups:
   - name: test.rules
