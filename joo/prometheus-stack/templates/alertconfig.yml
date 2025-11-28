@@ -22,6 +22,5 @@ spec:
       title: '{{ "{{ .CommonAnnotations.summary }}" }}'
       text: '{{ "{{ .CommonAnnotations.description }}" }}'
       apiURL:
-        secret:
-          name: alertmanager-slack
-          key: slack_api_url
+        name: alertmanager-slack
+        key: slack_api_url
