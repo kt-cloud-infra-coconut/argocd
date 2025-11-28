@@ -4,6 +4,8 @@ prometheus:
     scrapeConfigNamespaceSelector:
       matchLabels: 
         test: "123"
+    ruleNamespaceSelector: {}
+    ruleSelector: {}
     retention: 14d
     storageSpec: 
       emptyDir: {}
