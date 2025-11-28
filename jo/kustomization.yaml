@@ -4,9 +4,9 @@ kind: Kustomization
 namespace: ingress-myweb
 
 resources:
-  - edit/myweb-svc-deploy-edit.yml
-  - login/myweb-svc-deploy-login.yml
-  - regist/myweb-svc-deploy-regist.yml
+  - php/edit/myweb-svc-deploy-edit.yml
+  - php/login/myweb-svc-deploy-login.yml
+  - php/regist/myweb-svc-deploy-regist.yml
   - php/php-deploy-svc.yml
   - mariadb/mariadb-deploy.yml
   - mariadb/mariadb-pv.yml
@@ -15,27 +15,31 @@ resources:
   - myweb-ingress-rule.yml
 
 configMapGenerator:
-# 👈 Nginx 설정 파일 ConfigMap 생성
   - name: nginx-config
     files:
       - default.conf=php/nginx-config.yml
 
-  # 👈 PHP 코드 ConfigMap 생성
+  - name: nginx-regist-conf
+    files:
+      - regist.conf=php/regist/nginx-regist.conf
+
   - name: php-index-file
     files:
       - index.php=php/index.php
-      
+
   - name: login-php
     files:
-      - index.php=login/index.php
+      - index.php=php/login/index.php
+      - login_ok.php=php/login/login_ok.php
 
   - name: edit-php
     files:
-      - index.php=edit/index.php
+      - index.php=php/edit/index.php
 
   - name: regist-php
     files:
-      - index.php=regist/index.php
+      - index.php=php/regist/index.php
+      - regist_ok.php=php/regist/regist_ok.php
 
 generatorOptions:
   disableNameSuffixHash: true
