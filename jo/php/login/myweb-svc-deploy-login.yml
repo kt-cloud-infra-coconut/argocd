@@ -34,7 +34,8 @@ spec:
       containers:
         # 1. PHP-FPM 컨테이너 (변경 사항 없음)
         - name: php-fpm
-          image: eunjun0122/login:1.1.0
+          #image: eunjun0122/login:1.1.0
+          image: eunjun0122/myapp:1.1.0
           ports:
             - containerPort: 9000
           securityContext: 
