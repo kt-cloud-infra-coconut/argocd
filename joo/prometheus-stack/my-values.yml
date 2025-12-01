@@ -4,6 +4,8 @@ prometheus:
     scrapeConfigNamespaceSelector:
       matchLabels: 
         test: "123"
+    ruleNamespaceSelector: {}
+    ruleSelector: {}
     retention: 14d
     storageSpec: 
       emptyDir: {}
@@ -51,27 +53,6 @@ alertmanager:
     podMetadata:
       labels:
         coconut: enable
-    extraEnv:
-      - name: SLACK_API_URL
-        valueFrom: 
-          secretKeyRef:
-            name: alertmanager-slack
-            key: SLACK_API_URL
-  config:
-    global:
-      slack_api_url: "$(SLACK_API_URL)" # 환경변수로 참조
-    route:
-      receiver: 'slack-notifications'
-      group_by: ['alertname']
-      group_wait: 30s
-      group_interval: 5m
-      repeat_interval: 1h
-    receivers:
-      - name: 'slack-notifications'
-        slack_configs:
-          - channel: '#coconut-alert-test'   # Slack 채널명은 # 붙여야 함
-            username: 'Alertmanager'
-            icon_emoji: ':warning:'
-            send_resolved: true
-            title: '{{ .CommonAnnotations.summary }}'
-            text: '{{ .CommonAnnotations.description }}'
+    # 모든 네임스페이스의 AlertmanagerConfig를 읽도록 설정
+    alertmanagerConfigSelector: {}            # 라벨 제한 없음
+    alertmanagerConfigNamespaceSelector: {}   # 네임스페이스 제한 없음

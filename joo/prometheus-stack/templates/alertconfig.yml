@@ -1,0 +1,26 @@
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
+metadata:
+  name: slack-config
+  namespace: joo
+  labels:
+    alertmanagerConfig: slack   # values.yml에서 참조하는 라벨
+spec:
+  route:
+    receiver: slack-notifications
+    groupBy: ['alertname']
+    groupWait: 30s
+    groupInterval: 5m
+    repeatInterval: 1h
+  receivers:
+  - name: slack-notifications
+    slackConfigs:
+    - channel: '#coconut-alert-test'
+      username: 'Alertmanager'
+      iconEmoji: ':warning:'
+      sendResolved: true
+      title: '알림'
+      text: '테스트 알림'
+      apiURL:
+        name: alertmanager-slack
+        key: slack_api_url

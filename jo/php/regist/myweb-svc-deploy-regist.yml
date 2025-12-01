@@ -14,53 +14,49 @@ spec:
         app: php-regist
     spec:
       securityContext:
-        runAsUser: 0  # 컨테이너가 누구(어떤 사용자) 권한으로 실행될지 정함. 0은 관리자(루트)예요.
-        fsGroup: 101  # 파일을 공유할 때 쓰는 그룹 번호. 파일 권한 때문에 씀.
+        runAsUser: 0  
+        fsGroup: 101  
 
-      volumes:        # Pod 안에서 사용할 저장공간(파일 덩어리)을 정의
-        - name: php-code 
+      volumes:        
+        - name: php-code # 볼륨 이름
           configMap:
-            name: regist-php # 'regist-php'라는 ConfigMap에서 PHP 코드를 가져와요.
-            defaultMode: 0644 # 파일 권한을 0644
+            name: regist-php  # configmap 이름
+            defaultMode: 0644 # 파일 권한 644로 설정
         
-        - name: regist-nginx-config
+        - name: regist-nginx-config  # 볼륨 이름
           configMap:
-            name: nginx-regist-conf  # 'nginx-regist-conf'라는 ConfigMap에서 Nginx 설정 파일을 가져와요.
+            name: nginx-regist-conf  # configmap 이름
             
       containers:
-        - name: php-fpm     # 컨테이너의 이름이에요. 이건 PHP를 처리하는 부분이에요.
-          image: eunjun0122/regist:1.1.0  # 이 컨테이너가 사용할 이미지(프로그램 묶음)이에요. 버전 1.1.0이에요.
+        - name: php-fpm    #컨테이너 이름
+          image: eunjun0122/regist:1.1.0  # 컨테이너가 쓸 이미지 저장소
           ports:
-            - containerPort: 9000 # 이 컨테이너가 내부에서 9000번 포트를 사용해요. (PHP-FPM 기본 포트)
+            - containerPort: 9000 # php-fpm이 사용할 포트
           securityContext: 
-            runAsUser: 0   # 이 컨테이너도 루트 권한으로 실행돼요.
+            runAsUser: 0   # 루트 권한으로 실행 가능
           volumeMounts:
-            - name: php-code
-              mountPath: /var/www/html/regist  # 아까 정의한 php-code를 이 폴더에 넣어 사용해요.
-              
-        - name: nginx
-          image: nginx:stable-alpine  # 이 컨테이너가 사용할 이미지에요. 안정적인 Alpine 기반 Nginx 버전이에요.
+            - name: php-code # 볼륨 이름
+              mountPath: /var/www/html/regist  # 컨테이너 내부에서 php-code가 쓸 경로
+
+        - name: nginx # 컨테이너 이름
+          image: nginx:stable-alpine   #컨테이너가 쓸 이미지
           ports:
-            - containerPort: 80 # 웹 요청(브라우저에서 오는 것)을 80번 포트로 받아요.
-            - containerPort: 9000 # ⬅️ 추가: FPM과 통신할 때도 포트를 열어놨어요.
-                                   # (보통은 내부 통신이라 꼭 필요하진 않지만 열어둘 수 있어요)
+            - containerPort: 80 # nginx가 클러스터 내부에서 쓸 포트
+            - containerPort: 9000 # php-fpm의 내부에서 LISTEN하는 포트 번호
           securityContext:
-            runAsUser: 0   # Nginx도 루트 권한으로 실행돼요.
-          resources:
-            requests:
+            runAsUser: 0  # 슈퍼 관리자 권한으로 실행가능
+          resources: # 각각의 리소스 할당 설정
+            requests:  # 리소스 요구 설정
               memory: "128Mi"
               cpu: "100m"
-            limits:
+            limits: # 리소스 사용 한도 설정
               memory: "256Mi"
               cpu: "500m"
-          volumeMounts:
-            - name: php-code
-              mountPath: /var/www/html/regist
-                # Nginx도 PHP 코드가 필요할 수 있어서 같은 경로에 꽂아줘요.
-            - name: regist-nginx-config
-              mountPath: /etc/nginx/conf.d
-               # nginx 설정 파일들이 /etc/nginx/conf.d에 들어가게 해요.
-              # 이렇게 하면 Nginx가 어떤 페이지를 보여줄지 알 수 있어요.
+          volumeMounts: 
+            - name: php-code # 볼륨 이름
+              mountPath: /var/www/html/regist # 컨테이너가 쓸 경로
+            - name: regist-nginx-config # 볼륨 이름
+              mountPath: /etc/nginx/conf.d # 컨테이너가 쓸 경로
 ---
 apiVersion: v1
 kind: Service

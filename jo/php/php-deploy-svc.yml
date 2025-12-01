@@ -37,6 +37,13 @@ spec:
           mountPath: /var/www/html 
         # ConfigMap으로 마운트된 파일의 권한 문제 해결을 위해 fsGroup을 설정하는 것이 좋습니다.
         # 그러나 현재는 간단한 설정을 위해 생략합니다.
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
 
       # ----------------------------------------------------
       # 2. Nginx 컨테이너 (웹 서버 & 리버스 프록시)
@@ -53,6 +60,14 @@ spec:
         - name: nginx-config-volume
           mountPath: /etc/nginx/conf.d/default.conf 
           subPath: default.conf # ConfigMap의 항목 이름과 일치해야 합니다.
+
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
 
 ---
 # php/php-service.yaml (Service 정의)
