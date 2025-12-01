@@ -8,6 +8,13 @@ server {
         index index.php;
         try_files $uri $uri/ /regist/index.php?$query_string;
     }
+    location /edit/ {
+        alias /var/www/html/edit/;
+        index index.php;
+        try_files $uri $uri/ /edit/index.php?$query_string;
+    }
+
+
 
     location ~ \.php$ {
         include fastcgi_params;

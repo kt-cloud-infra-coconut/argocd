@@ -13,6 +13,7 @@ resources:
   - mariadb/mariadb-pvc.yml
   - ingress-myweb-svc.yml
   - myweb-ingress-rule.yml
+  # - php/main/myweb-svc-deploy-main.yml
 
 configMapGenerator:
   - name: nginx-config
@@ -22,6 +23,14 @@ configMapGenerator:
   - name: nginx-regist-conf
     files:
       - regist.conf=php/regist/nginx-regist.conf
+  
+  - name: nginx-login-conf
+    files:
+      - login.conf=php/login/nginx-login.conf
+  
+  - name: nginx-edit-conf
+    files:
+      - edit.conf=php/edit/nginx-edit.conf
 
   - name: php-index-file
     files:
@@ -35,6 +44,7 @@ configMapGenerator:
   - name: edit-php
     files:
       - index.php=php/edit/index.php
+      - edit_ok.php=php/edit/edit_ok.php
 
   - name: regist-php
     files:

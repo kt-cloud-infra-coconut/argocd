@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -121,8 +122,7 @@
                 <input type="submit" value="로그인" id="submitbutton" />
                 
                 <div class="link-group">
-                    <a href="../regist">회원가입</a> |
-                    <a href="#">비밀번호 찾기</a>
+                    <a href="../regist">회원가입</a>
                 </div>
             </div>
         </form>

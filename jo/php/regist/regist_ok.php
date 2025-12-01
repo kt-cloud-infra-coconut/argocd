@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // 3. 쿼리 실행
     if($stmt->execute()) {
-        echo "<script>alert('회원가입이 완료되었습니다.'); location.href='../login';</script>";
+        echo "<script>alert('회원가입이 완료되었습니다.'); location.href='http://34.64.56.21:30085/';</script>";
     } else {
         // 오류 상세 정보 포함
         echo "<script>alert('회원가입에 실패했습니다. 다시 시도해주세요. 오류: " . $stmt->error . "'); history.back();</script>";

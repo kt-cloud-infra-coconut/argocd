@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['userid'] = $user['userid'];
             $_SESSION['username'] = $user['name'];
             
-            echo "<script>alert('로그인 성공!'); location.href='../edit';</script>"; // edit 페이지로 이동
+            echo "<script>alert('로그인 성공!'); location.href='http://34.64.56.21:30085/edit/';</script>"; // edit 페이지로 이동
         } else {
             // 사용자 정보 불일치
             echo "<script>alert('이메일 또는 비밀번호가 일치하지 않습니다.'); history.back();</script>";

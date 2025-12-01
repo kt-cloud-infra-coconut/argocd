@@ -4,7 +4,6 @@ metadata:
   name: myweb
   namespace: ingress-myweb
   annotations:
-    # nginx.ingress.kubernetes.io/rewrite-target: /
     nginx.ingress.kubernetes.io/whitelist-source-range: "0.0.0.0/0"
 spec:
   ingressClassName: myweb-nginx
@@ -12,13 +11,15 @@ spec:
   - http:
       paths:
       - pathType: Prefix
-        path: /login
+        path: /
         backend:
           service:
             name: php-login-service
             port:
               number: 80
-        path: /
+              
+      - pathType: Prefix
+        path: /login_ok.php
         backend:
           service:
             name: php-login-service
@@ -38,23 +39,6 @@ spec:
         backend:
           service:
             name: php-regist-service
-            port:
-              number: 80
-      - pathType: Prefix
-
-        path: /login_ok.php
-        backend:
-          service:
-            name: php-login-service
-            port:
-              number: 80
-
-
-      - pathType: Prefix
-        path: /edit
-        backend:
-          service:
-            name: php-edit-service
             port:
               number: 80
 
